@@ -233,10 +233,15 @@ export default function RecommendationModule() {
                         <div>
                           <h3 className="text-sm font-medium mb-2">Why this recommendation?</h3>
                           <p className="text-sm text-gray-600">
-                            This bundle is recommended based on historical purchase patterns and product
-                            complementarity. Customers who purchased this product often bought the recommended
-                            cross-sell product within
-                            {bundles.find((b) => b.id === selectedBundle)?.crossSellDays} days.
+                            {selectedBundle === 1 && (
+                              "This combination is recommended based on historical buying patterns and complementary skincare needs. Customers using the Barrier Care Cream often add the Pigmentation Corrector to enhance skin tone, hydration, and overall glow."
+                            )}
+                            {selectedBundle === 2 && (
+                              "This recommendation is based on historical purchase patterns and product synergy. Customers who purchased the Vitamin C Face Serum with Ferulic Acid frequently added the Hyaluronic Acid Serum within 15 days to boost hydration and enhance their skin-brightening routine."
+                            )}
+                            {selectedBundle === 3 && (
+                              "This recommendation is based on customer purchase patterns and product complementarity. Users who purchased the Retinol Night Cream often added the Niacinamide Serum within 10–15 days to soothe, strengthen, and balance their skin while using retinol."
+                            )}
                           </p>
                         </div>
                       </>
