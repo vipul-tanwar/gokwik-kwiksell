@@ -9,7 +9,7 @@ export function KwikEngageHeader() {
           <img src="/placeholder.svg?height=40&width=150" alt="KwikEngage Logo" className="h-10" />
         </div>
         <div className="flex items-center space-x-4">
-          <div className="text-sm text-gray-700">MM_11thJuly_retention</div>
+          <div className="text-sm text-gray-700">Welcome, Gokwik User</div>
           <Avatar className="h-8 w-8">
             <AvatarImage src="/placeholder.svg?height=32&width=32" alt="User" />
             <AvatarFallback>U</AvatarFallback>

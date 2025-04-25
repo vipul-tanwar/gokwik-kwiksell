@@ -80,7 +80,7 @@ export default function RecommendationModule() {
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="ai-recommended">AI Recommended Bundles</TabsTrigger>
           <TabsTrigger value="manual-bundles">Manual Bundles</TabsTrigger>
-          <TabsTrigger value="ai-autopilot">AI Auto-pilot<Badge className="ml-2 bg-yellow-500">Beta</Badge>
+          <TabsTrigger value="ai-autopilot">AI Auto-pilot<Badge className="ml-2 bg-green-500">Beta</Badge>
           </TabsTrigger>
         </TabsList>
 
