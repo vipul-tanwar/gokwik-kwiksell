@@ -1,10 +1,38 @@
+"use client"
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { ChartContainer, ChartTooltip } from "@/components/ui/chart"
-import { Area, AreaChart, Bar, BarChart, CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts"
 import { ArrowUpRight, TrendingUp, DollarSign, ShoppingCart, Users, Package, BarChart3, PieChart } from "lucide-react"
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler,
+} from "chart.js"
+import { Line, Bar, Pie } from "react-chartjs-2"
+
+// Register ChartJS components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler,
+)
 
 // Mock data for charts
 const revenueData = [
@@ -93,6 +121,106 @@ const topBundles = [
     revenue: 38700,
   },
 ]
+
+// Prepare chart data
+const revenueChartData = {
+  labels: revenueData.map((item) => item.date),
+  datasets: [
+    {
+      label: "Revenue",
+      data: revenueData.map((item) => item.revenue),
+      fill: true,
+      backgroundColor: "rgba(14, 165, 233, 0.2)",
+      borderColor: "rgba(14, 165, 233, 1)",
+      tension: 0.4,
+    },
+  ],
+}
+
+const ordersChartData = {
+  labels: ordersData.map((item) => item.date),
+  datasets: [
+    {
+      label: "Orders",
+      data: ordersData.map((item) => item.orders),
+      backgroundColor: "rgba(139, 92, 246, 0.8)",
+      borderRadius: 4,
+    },
+  ],
+}
+
+const engagementChartData = {
+  labels: engagementData.map((item) => item.name),
+  datasets: [
+    {
+      label: "Engagement",
+      data: engagementData.map((item) => item.value),
+      backgroundColor: ["rgba(59, 130, 246, 0.8)", "rgba(16, 185, 129, 0.8)", "rgba(245, 158, 11, 0.8)"],
+      borderWidth: 1,
+    },
+  ],
+}
+
+const channelPerformanceData = {
+  labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+  datasets: [
+    {
+      label: "WhatsApp",
+      data: [65, 59, 80, 81, 56, 55, 40],
+      borderColor: "rgba(37, 211, 102, 1)",
+      backgroundColor: "rgba(37, 211, 102, 0.5)",
+      tension: 0.4,
+    },
+    {
+      label: "Email",
+      data: [42, 38, 55, 56, 40, 45, 30],
+      borderColor: "rgba(74, 144, 226, 1)",
+      backgroundColor: "rgba(74, 144, 226, 0.5)",
+      tension: 0.4,
+    },
+  ],
+}
+
+// Chart options
+const lineChartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: "top" as const,
+    },
+  },
+  scales: {
+    y: {
+      beginAtZero: true,
+    },
+  },
+}
+
+const barChartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: "top" as const,
+    },
+  },
+  scales: {
+    y: {
+      beginAtZero: true,
+    },
+  },
+}
+
+const pieChartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: "right" as const,
+    },
+  },
+}
 
 export default function InsightsModule() {
   return (
@@ -278,27 +406,7 @@ export default function InsightsModule() {
                 </CardHeader>
                 <CardContent>
                   <div className="h-[300px]">
-                    <ChartContainer>
-                      <AreaChart data={revenueData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                        <defs>
-                          <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#0ea5e9" stopOpacity={0.8} />
-                            <stop offset="95%" stopColor="#0ea5e9" stopOpacity={0} />
-                          </linearGradient>
-                        </defs>
-                        <XAxis dataKey="date" />
-                        <YAxis />
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <Tooltip content={<ChartTooltip />} />
-                        <Area
-                          type="monotone"
-                          dataKey="revenue"
-                          stroke="#0ea5e9"
-                          fillOpacity={1}
-                          fill="url(#colorRevenue)"
-                        />
-                      </AreaChart>
-                    </ChartContainer>
+                    <Line options={lineChartOptions} data={revenueChartData} />
                   </div>
                 </CardContent>
               </Card>
@@ -310,15 +418,7 @@ export default function InsightsModule() {
                 </CardHeader>
                 <CardContent>
                   <div className="h-[300px]">
-                    <ChartContainer>
-                      <BarChart data={ordersData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                        <XAxis dataKey="date" />
-                        <YAxis />
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <Tooltip content={<ChartTooltip />} />
-                        <Bar dataKey="orders" fill="#8b5cf6" />
-                      </BarChart>
-                    </ChartContainer>
+                    <Bar options={barChartOptions} data={ordersChartData} />
                   </div>
                 </CardContent>
               </Card>
@@ -386,23 +486,7 @@ export default function InsightsModule() {
                 </CardHeader>
                 <CardContent>
                   <div className="h-[300px]">
-                    <ChartContainer>
-                      <BarChart
-                        data={engagementData}
-                        layout="vertical"
-                        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis type="number" domain={[0, 100]} />
-                        <YAxis dataKey="name" type="category" />
-                        <Tooltip content={<ChartTooltip />} />
-                        <Bar
-                          dataKey="value"
-                          fill="#3b82f6"
-                          label={{ position: "right", formatter: (value) => `${value}%` }}
-                        />
-                      </BarChart>
-                    </ChartContainer>
+                    <Pie options={pieChartOptions} data={engagementChartData} />
                   </div>
                 </CardContent>
               </Card>
@@ -414,28 +498,7 @@ export default function InsightsModule() {
                 </CardHeader>
                 <CardContent>
                   <div className="h-[300px]">
-                    <ChartContainer>
-                      <LineChart
-                        data={[
-                          { day: "Mon", whatsapp: 65, email: 42 },
-                          { day: "Tue", whatsapp: 59, email: 38 },
-                          { day: "Wed", whatsapp: 80, email: 55 },
-                          { day: "Thu", whatsapp: 81, email: 56 },
-                          { day: "Fri", whatsapp: 56, email: 40 },
-                          { day: "Sat", whatsapp: 55, email: 45 },
-                          { day: "Sun", whatsapp: 40, email: 30 },
-                        ]}
-                        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="day" />
-                        <YAxis />
-                        <Tooltip content={<ChartTooltip />} />
-                        <Legend />
-                        <Line type="monotone" dataKey="whatsapp" stroke="#25D366" strokeWidth={2} />
-                        <Line type="monotone" dataKey="email" stroke="#4A90E2" strokeWidth={2} />
-                      </LineChart>
-                    </ChartContainer>
+                    <Line options={lineChartOptions} data={channelPerformanceData} />
                   </div>
                 </CardContent>
               </Card>
