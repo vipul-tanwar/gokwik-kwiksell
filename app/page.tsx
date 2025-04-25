@@ -11,7 +11,7 @@ export default function SmartCrossSellPage() {
       <KwikEngageHeader />
       <main className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold" style={{ color: "#004B8D" }}>Smart Cross-Sell</h1>
+          <h1 className="text-2xl font-bold" style={{ color: "#004B8D" }}>Kwik Sell</h1>
         </div>
 
         <div className="bg-white rounded-lg shadow-sm border p-6" style={{ borderTop: "3px solid #F7B24F" }}>
