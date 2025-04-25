@@ -53,7 +53,7 @@ const recommendedBundles = [
 export default function RecommendationModule() {
   const [activeTab, setActiveTab] = useState("ai-recommended")
   const [autopilotEnabled, setAutopilotEnabled] = useState(false)
-  const [selectedBundle, setSelectedBundle] = useState<number | null>(null)
+  const [selectedBundle, setSelectedBundle] = useState<number>(1)
   const [bundles, setBundles] = useState(recommendedBundles)
   
   // States for manual bundle creation
