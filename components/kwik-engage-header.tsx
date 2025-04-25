@@ -6,7 +6,7 @@ export function KwikEngageHeader() {
     <header className="w-full" style={{ backgroundColor: "#004B8D", borderBottom: "3px solid #F7B24F" }}>
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <img src="/gokwiklogo.png" alt="GoKwik Logo" className="h-10" />
+          <img src="/gokwiklogo.png" alt="GoKwik Logo" className="h-10 drop-shadow-2xl " />
         </div>
         <div className="flex items-center space-x-4">
           <div className="text-sm font-medium" style={{ color: "#F7B24F" }}>Welcome, GoKwik User</div>
