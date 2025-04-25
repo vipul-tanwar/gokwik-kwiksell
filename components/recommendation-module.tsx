@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Switch } from "@/components/ui/switch"
@@ -9,11 +9,12 @@ import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { Info, Plus, ArrowRight } from "lucide-react"
+import { Info, Plus, ArrowRight, Check } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import crossSellData from "@/public/restock_crosssell_from_csv.json"
 
 // Mock data for AI recommended bundles
 const recommendedBundles = [
@@ -54,6 +55,30 @@ export default function RecommendationModule() {
   const [autopilotEnabled, setAutopilotEnabled] = useState(false)
   const [selectedBundle, setSelectedBundle] = useState<number | null>(null)
   const [bundles, setBundles] = useState(recommendedBundles)
+  
+  // States for manual bundle creation
+  const [originProductType, setOriginProductType] = useState("product")
+  const [crossSellProductType, setCrossSellProductType] = useState("product")
+  const [originSearchTerm, setOriginSearchTerm] = useState("")
+  const [crossSellSearchTerm, setCrossSellSearchTerm] = useState("")
+  const [selectedOriginProduct, setSelectedOriginProduct] = useState<any>(null)
+  const [selectedCrossSellProduct, setSelectedCrossSellProduct] = useState<any>(null)
+  const [channel, setChannel] = useState("")
+  const [triggerDays, setTriggerDays] = useState("20")
+  const [manualBundles, setManualBundles] = useState<any[]>([])
+  
+  // Extract product names and cross-sell product names from JSON data
+  const productNames = crossSellData.map(item => ({
+    name: item["Product Name"],
+    id: item["Product ID"],
+    sku: item["variant_sku"]
+  }))
+  
+  const crossSellProductNames = crossSellData.map(item => ({
+    name: item["Cross Sell Product name"],
+    id: item["Cross Sell Product ID"],
+    sku: item["Cross Sell variant_sku"]
+  }))
 
   const toggleBundleStatus = (id: number) => {
     setBundles(bundles.map((bundle) => (bundle.id === id ? { ...bundle, enabled: !bundle.enabled } : bundle)))
@@ -357,7 +382,7 @@ export default function RecommendationModule() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="space-y-4">
                     <h3 className="text-sm font-medium">Origin Product/Collection</h3>
-                    <Select>
+                    <Select value={originProductType} onValueChange={setOriginProductType}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select product type" />
                       </SelectTrigger>
@@ -368,18 +393,60 @@ export default function RecommendationModule() {
                       </SelectContent>
                     </Select>
 
-                    <Input placeholder="Search products..." />
+                    <Input
+                      placeholder="Search products..."
+                      value={originSearchTerm}
+                      onChange={(e) => setOriginSearchTerm(e.target.value)}
+                    />
 
                     <div className="border rounded-md p-3 h-[200px] overflow-y-auto">
-                      <div className="text-sm text-gray-500 text-center mt-16">
-                        Select a product type and search to see results
-                      </div>
+                      {originProductType === "product" ? (
+                        <ScrollArea className="h-full">
+                          <div className="space-y-2">
+                            {productNames
+                              .filter(product =>
+                                originSearchTerm === "" ||
+                                product.name.toLowerCase().includes(originSearchTerm.toLowerCase())
+                              )
+                              .map((product, index) => (
+                                <div
+                                  key={`origin-${index}`}
+                                  className={`p-2 rounded-md cursor-pointer flex items-center justify-between ${
+                                    selectedOriginProduct?.id === product.id
+                                      ? "bg-blue-50 border border-blue-200"
+                                      : "hover:bg-gray-50"
+                                  }`}
+                                  onClick={() => setSelectedOriginProduct(product)}
+                                >
+                                  <div className="text-sm truncate flex-1" title={product.name}>
+                                    {product.name}
+                                  </div>
+                                  {selectedOriginProduct?.id === product.id && (
+                                    <Check className="h-4 w-4 text-blue-500 ml-2 flex-shrink-0" />
+                                  )}
+                                </div>
+                              ))
+                            }
+                            {originSearchTerm !== "" && productNames.filter(product =>
+                              product.name.toLowerCase().includes(originSearchTerm.toLowerCase())
+                            ).length === 0 && (
+                              <div className="text-sm text-gray-500 text-center py-4">
+                                No products found matching "{originSearchTerm}"
+                              </div>
+                            )}
+                          </div>
+                        </ScrollArea>
+                      ) : (
+                        <div className="text-sm text-gray-500 text-center mt-16">
+                          Select a product type to see results
+                        </div>
+                      )}
                     </div>
                   </div>
 
                   <div className="space-y-4">
                     <h3 className="text-sm font-medium">Cross-Sell Product/Collection</h3>
-                    <Select>
+                    <Select value={crossSellProductType} onValueChange={setCrossSellProductType}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select product type" />
                       </SelectTrigger>
@@ -390,12 +457,54 @@ export default function RecommendationModule() {
                       </SelectContent>
                     </Select>
 
-                    <Input placeholder="Search products..." />
+                    <Input
+                      placeholder="Search products..."
+                      value={crossSellSearchTerm}
+                      onChange={(e) => setCrossSellSearchTerm(e.target.value)}
+                    />
 
                     <div className="border rounded-md p-3 h-[200px] overflow-y-auto">
-                      <div className="text-sm text-gray-500 text-center mt-16">
-                        Select a product type and search to see results
-                      </div>
+                      {crossSellProductType === "product" ? (
+                        <ScrollArea className="h-full">
+                          <div className="space-y-2">
+                            {crossSellProductNames
+                              .filter(product =>
+                                crossSellSearchTerm === "" ||
+                                product.name.toLowerCase().includes(crossSellSearchTerm.toLowerCase())
+                              )
+                              .map((product, index) => (
+                                <div
+                                  key={`cross-sell-${index}`}
+                                  className={`p-2 rounded-md cursor-pointer flex items-center justify-between ${
+                                    selectedCrossSellProduct?.id === product.id
+                                      ? "bg-blue-50 border border-blue-200"
+                                      : "hover:bg-gray-50"
+                                  }`}
+                                  onClick={() => setSelectedCrossSellProduct(product)}
+                                >
+                                  <div className="text-sm truncate flex-1" title={product.name}>
+                                    {product.name}
+                                  </div>
+                                  {selectedCrossSellProduct?.id === product.id && (
+                                    <Check className="h-4 w-4 text-blue-500 ml-2 flex-shrink-0" />
+                                  )}
+                                </div>
+                              ))
+                            }
+                            {crossSellSearchTerm !== "" && crossSellProductNames.filter(product =>
+                              product.name.toLowerCase().includes(crossSellSearchTerm.toLowerCase())
+                            ).length === 0 && (
+                              <div className="text-sm text-gray-500 text-center py-4">
+                                No products found matching "{crossSellSearchTerm}"
+                              </div>
+                            )}
+                          </div>
+                        </ScrollArea>
+                      ) : (
+                        <div className="text-sm text-gray-500 text-center mt-16">
+                          Select a product type to see results
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -404,7 +513,7 @@ export default function RecommendationModule() {
 
                     <div className="space-y-2">
                       <Label htmlFor="channel">Communication Channel</Label>
-                      <Select>
+                      <Select value={channel} onValueChange={setChannel}>
                         <SelectTrigger id="channel">
                           <SelectValue placeholder="Select channel" />
                         </SelectTrigger>
@@ -419,13 +528,41 @@ export default function RecommendationModule() {
                     <div className="space-y-2">
                       <Label htmlFor="trigger-days">Trigger (days after purchase)</Label>
                       <div className="flex items-center space-x-2">
-                        <Input id="trigger-days" type="number" placeholder="20" />
+                        <Input
+                          id="trigger-days"
+                          type="number"
+                          placeholder="20"
+                          value={triggerDays}
+                          onChange={(e) => setTriggerDays(e.target.value)}
+                        />
                         <span className="text-sm text-gray-500">days</span>
                       </div>
                     </div>
 
                     <div className="pt-4">
-                      <Button className="w-full" style={{ backgroundColor: "#004B8D" }}>
+                      <Button
+                        className="w-full"
+                        style={{ backgroundColor: "#004B8D" }}
+                        disabled={!selectedOriginProduct || !selectedCrossSellProduct || !channel}
+                        onClick={() => {
+                          if (selectedOriginProduct && selectedCrossSellProduct && channel) {
+                            const newBundle = {
+                              id: Date.now(),
+                              originProduct: selectedOriginProduct,
+                              crossSellProduct: selectedCrossSellProduct,
+                              channel,
+                              triggerDays: parseInt(triggerDays) || 20
+                            };
+                            setManualBundles([...manualBundles, newBundle]);
+                            
+                            // Reset selection
+                            setSelectedOriginProduct(null);
+                            setSelectedCrossSellProduct(null);
+                            setOriginSearchTerm("");
+                            setCrossSellSearchTerm("");
+                          }
+                        }}
+                      >
                         <Plus className="h-4 w-4 mr-2" />
                         Add Bundle
                       </Button>
@@ -438,9 +575,47 @@ export default function RecommendationModule() {
                 <div>
                   <h3 className="text-sm font-medium mb-4">Your Manual Bundles</h3>
 
-                  <div className="border rounded-md p-4 text-center text-gray-500">
-                    No manual bundles created yet. Use the form above to create your first bundle.
-                  </div>
+                  {manualBundles.length > 0 ? (
+                    <div className="space-y-4">
+                      {manualBundles.map((bundle) => (
+                        <div key={bundle.id} className="border rounded-md p-4 space-y-3">
+                          <div className="flex items-center justify-between">
+                            <h4 className="font-medium">Bundle #{bundle.id.toString().slice(-4)}</h4>
+                            <Badge style={{ backgroundColor: "#004B8D" }}>Active</Badge>
+                          </div>
+                          
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                              <div className="text-sm text-gray-500">Origin Product</div>
+                              <div className="font-medium truncate" title={bundle.originProduct.name}>
+                                {bundle.originProduct.name}
+                              </div>
+                            </div>
+                            
+                            <div>
+                              <div className="text-sm text-gray-500">Cross-Sell Product</div>
+                              <div className="font-medium truncate" title={bundle.crossSellProduct.name}>
+                                {bundle.crossSellProduct.name}
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-center justify-between text-sm">
+                            <div>
+                              <span className="text-gray-500">Channel:</span> {bundle.channel === "both" ? "WhatsApp & Email" : bundle.channel}
+                            </div>
+                            <div>
+                              <span className="text-gray-500">Trigger:</span> {bundle.triggerDays} days
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="border rounded-md p-4 text-center text-gray-500">
+                      No manual bundles created yet. Use the form above to create your first bundle.
+                    </div>
+                  )}
                 </div>
               </div>
             </CardContent>
