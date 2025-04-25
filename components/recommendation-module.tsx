@@ -149,8 +149,8 @@ export default function RecommendationModule() {
                   </CardHeader>
                   <CardContent className="space-y-6">
                     {autopilotEnabled && (
-                      <Alert variant="warning" className="mb-4">
-                        <AlertDescription>
+                      <Alert variant="default" className="mb-4 border-yellow-400 bg-yellow-50">
+                        <AlertDescription className="text-yellow-800">
                           Individual bundles cannot be enabled while AI Auto-pilot is active.
                         </AlertDescription>
                       </Alert>
@@ -162,8 +162,23 @@ export default function RecommendationModule() {
                           <div className="space-y-4">
                             <div>
                               <h3 className="text-sm font-medium text-gray-500 mb-1">Original Product</h3>
-                              <div className="font-medium">
-                                {bundles.find((b) => b.id === selectedBundle)?.productName}
+                              <div className="space-y-2">
+                                {(selectedBundle === 1 || selectedBundle === 2 || selectedBundle === 3) && (
+                                  <div className="mb-1">
+                                    <img
+                                      src={
+                                        selectedBundle === 1 ? "/cross-sell-image/11.webp" :
+                                        selectedBundle === 2 ? "/cross-sell-image/21.webp" :
+                                        "/cross-sell-image/31.webp"
+                                      }
+                                      alt="Product image"
+                                      className="h-56 w-36 rounded-sm object-cover"
+                                    />
+                                  </div>
+                                )}
+                                <div className="font-medium">
+                                  {bundles.find((b) => b.id === selectedBundle)?.productName}
+                                </div>
                               </div>
                               <div className="text-sm text-gray-500">
                                 ID: {bundles.find((b) => b.id === selectedBundle)?.productId}
@@ -181,8 +196,23 @@ export default function RecommendationModule() {
                           <div className="space-y-4">
                             <div>
                               <h3 className="text-sm font-medium text-gray-500 mb-1">Cross-Sell Product</h3>
-                              <div className="font-medium">
-                                {bundles.find((b) => b.id === selectedBundle)?.crossSellProduct}
+                              <div className="space-y-2">
+                                {(selectedBundle === 1 || selectedBundle === 2 || selectedBundle === 3) && (
+                                  <div className="mb-1">
+                                    <img
+                                      src={
+                                        selectedBundle === 1 ? "/cross-sell-image/12.webp" :
+                                        selectedBundle === 2 ? "/cross-sell-image/22.webp" :
+                                        "/cross-sell-image/32.webp"
+                                      }
+                                      alt="Cross-sell product image"
+                                      className="h-56 w-36 rounded-sm object-cover"
+                                    />
+                                  </div>
+                                )}
+                                <div className="font-medium">
+                                  {bundles.find((b) => b.id === selectedBundle)?.crossSellProduct}
+                                </div>
                               </div>
                               <div className="text-sm text-gray-500">
                                 ID: {bundles.find((b) => b.id === selectedBundle)?.crossSellProductId}
