@@ -93,10 +93,55 @@ export default function ActionModule() {
     },
   ]
 
-  const handleSendTest = () => {
-    // In a real implementation, this would send the test message
-    setTestSent(true)
-    setTimeout(() => setTestSent(false), 3000)
+  const handleSendTest = async () => {
+    // Validate phone number
+    if (!phoneNumber || phoneNumber.trim() === '') {
+      alert('Please enter a phone number');
+      return;
+    }
+
+    // Basic phone number validation
+    const cleanedNumber = phoneNumber.replace(/\D/g, '');
+    if (cleanedNumber.length < 10 || cleanedNumber.length > 15) {
+      alert('Please enter a valid phone number (10-15 digits)');
+      return;
+    }
+
+    try {
+      // Format phone number to ensure it has country code
+      const formattedPhone = phoneNumber.startsWith('+') ?
+        phoneNumber.replace(/\D/g, '') :
+        `91${phoneNumber.replace(/\D/g, '')}`;
+      
+      console.log(`Sending test message to: ${formattedPhone}`);
+      
+      // Instead of directly calling the external API with the token exposed in client-side code,
+      // we'll call our own server-side API endpoint that will securely handle the token
+      const response = await fetch('/api/send-whatsapp-message', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "to": formattedPhone,
+          "templateId": "simple_utility_copy",
+          "language": "en",
+          "parameters": []
+        })
+      });
+      
+      if (response.ok) {
+        console.log('Message sent successfully');
+        setTestSent(true);
+        setTimeout(() => setTestSent(false), 3000);
+      } else {
+        console.error('Failed to send message:', await response.text());
+        alert('Failed to send test message. Check console for details.');
+      }
+    } catch (error) {
+      console.error('Error sending test message:', error);
+      alert('Error sending test message. Check console for details.');
+    }
   }
 
   const handleGenerateTemplates = () => {
@@ -308,12 +353,12 @@ export default function ActionModule() {
                           Email
                         </Label>
                       </div>
-                      <div className="flex items-center space-x-2">
+                      {/* <div className="flex items-center space-x-2">
                         <RadioGroupItem value="both" id="test-both" />
                         <Label htmlFor="test-both" className="cursor-pointer">
                           Both
                         </Label>
-                      </div>
+                      </div> */}
                     </RadioGroup>
                   </div>
 
