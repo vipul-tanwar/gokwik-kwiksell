@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { ArrowUpRight, TrendingUp, DollarSign, ShoppingCart, Users, Package, BarChart3, PieChart } from "lucide-react"
+import { ArrowUpRight, TrendingUp, Banknote, ShoppingCart, Users, Package, BarChart3, PieChart } from "lucide-react"
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -258,7 +258,7 @@ export default function InsightsModule() {
                 <CardContent>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                      <DollarSign className="h-5 w-5 mr-2" style={{ color: "#004B8D" }} />
+                      <Banknote className="h-5 w-5 mr-2" style={{ color: "#004B8D" }} />
                       <div className="text-2xl font-bold">₹234,004</div>
                     </div>
                     <div className="flex items-center text-sm" style={{ color: "#F7B24F" }}>
