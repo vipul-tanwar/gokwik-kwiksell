@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': API_KEY
+        'Authorization': API_KEY || '' // Ensure API_KEY is not undefined
       },
       body: JSON.stringify(externalApiRequest)
     });

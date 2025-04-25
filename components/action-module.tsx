@@ -11,6 +11,7 @@ import { SelectTrigger } from "@/components/ui/select"
 import { Select } from "@/components/ui/select"
 
 import { useState } from "react"
+import { useToast } from "@/hooks/use-toast"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
@@ -19,16 +20,15 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Switch } from "@/components/ui/switch"
 import { Separator } from "@/components/ui/separator"
-import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Wand2, Send, RefreshCw, Check, Copy, MessageSquare, Mail } from "lucide-react"
 
 export default function ActionModule() {
+  const { toast } = useToast()
   const [selectedChannel, setSelectedChannel] = useState<string>("whatsapp")
   const [phoneNumber, setPhoneNumber] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [selectedWhatsAppTemplate, setSelectedWhatsAppTemplate] = useState<number | null>(null)
   const [selectedEmailTemplate, setSelectedEmailTemplate] = useState<number | null>(null)
-  const [testSent, setTestSent] = useState<boolean>(false)
 
   // Mock WhatsApp templates
   const whatsappTemplates = [
@@ -96,24 +96,52 @@ export default function ActionModule() {
   const handleSendTest = async () => {
     // Validate phone number
     if (!phoneNumber || phoneNumber.trim() === '') {
-      alert('Please enter a phone number');
+      toast({
+        title: "Error",
+        description: "Please enter a phone number",
+        variant: "destructive",
+      });
       return;
     }
 
-    // Basic phone number validation
+    // Clean the phone number (remove non-digits)
     const cleanedNumber = phoneNumber.replace(/\D/g, '');
-    if (cleanedNumber.length < 10 || cleanedNumber.length > 15) {
-      alert('Please enter a valid phone number (10-15 digits)');
+    
+    // Check if number is too short (invalid)
+    if (cleanedNumber.length < 10) {
+      toast({
+        title: "Error",
+        description: "Invalid number",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // Check if number has country code
+    if (!cleanedNumber.startsWith('91') && cleanedNumber.length === 10) {
+      toast({
+        title: "Error",
+        description: "Please add country code",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // If number is too long
+    if (cleanedNumber.length > 15) {
+      toast({
+        title: "Error",
+        description: "Please enter a valid phone number (10-15 digits)",
+        variant: "destructive",
+      });
       return;
     }
 
     try {
-      // Format phone number to ensure it has country code
-      const formattedPhone = phoneNumber.startsWith('+') ?
-        phoneNumber.replace(/\D/g, '') :
-        `91${phoneNumber.replace(/\D/g, '')}`;
+      // Use the phone number as entered by the user (with country code)
+      const cleanedNumber = phoneNumber.replace(/\D/g, '');
       
-      console.log(`Sending test message to: ${formattedPhone}`);
+      console.log(`Sending test message to: ${cleanedNumber}`);
       
       // Instead of directly calling the external API with the token exposed in client-side code,
       // we'll call our own server-side API endpoint that will securely handle the token
@@ -123,7 +151,7 @@ export default function ActionModule() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          "to": formattedPhone,
+          "to": cleanedNumber,
           "templateId": "simple_utility_copy",
           "language": "en",
           "parameters": []
@@ -132,15 +160,26 @@ export default function ActionModule() {
       
       if (response.ok) {
         console.log('Message sent successfully');
-        setTestSent(true);
-        setTimeout(() => setTestSent(false), 3000);
+        toast({
+          title: "Success",
+          description: "Test message sent successfully!",
+          variant: "success",
+        });
       } else {
         console.error('Failed to send message:', await response.text());
-        alert('Failed to send test message. Check console for details.');
+        toast({
+          title: "Error",
+          description: "Failed to send test message. Check console for details.",
+          variant: "destructive",
+        });
       }
     } catch (error) {
       console.error('Error sending test message:', error);
-      alert('Error sending test message. Check console for details.');
+      toast({
+        title: "Error",
+        description: "Error sending test message. Check console for details.",
+        variant: "destructive",
+      });
     }
   }
 
@@ -326,12 +365,6 @@ export default function ActionModule() {
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
-                {testSent && (
-                  <Alert className="bg-green-50 mb-4" style={{ borderColor: "#004B8D" }}>
-                    <Check className="h-4 w-4" style={{ color: "#004B8D" }} />
-                    <AlertDescription className="text-green-700 ml-2">Test message sent successfully!</AlertDescription>
-                  </Alert>
-                )}
 
                 <div className="space-y-4">
                   <div className="space-y-2">
@@ -367,11 +400,18 @@ export default function ActionModule() {
                       <Label htmlFor="test-phone">WhatsApp Number</Label>
                       <Input
                         id="test-phone"
-                        placeholder="+91 9876543210"
+                        placeholder="919876543210"
                         value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        onChange={(e) => {
+                          // Allow only numbers
+                          const value = e.target.value.replace(/\D/g, '');
+                          setPhoneNumber(value);
+                        }}
+                        type="tel"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                       />
-                      <p className="text-xs text-gray-500">Enter your WhatsApp number to receive a test message</p>
+                      <p className="text-xs text-gray-500">Enter your WhatsApp number with country code (e.g., 919876543210)</p>
                     </div>
                   )}
 
@@ -391,9 +431,9 @@ export default function ActionModule() {
 
                   <div className="space-y-2">
                     <Label>Select Product Bundle to Test</Label>
-                    <Select>
+                    <Select defaultValue="bundle1">
                       <SelectTrigger>
-                        <SelectValue placeholder="Select a product bundle" />
+                        <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="bundle1">BARRIER CREAM → KOJIC ACID CREAM</SelectItem>
