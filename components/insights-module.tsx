@@ -130,8 +130,8 @@ const revenueChartData = {
       label: "Revenue",
       data: revenueData.map((item) => item.revenue),
       fill: true,
-      backgroundColor: "rgba(14, 165, 233, 0.2)",
-      borderColor: "rgba(14, 165, 233, 1)",
+      backgroundColor: "rgba(0, 75, 141, 0.2)",
+      borderColor: "rgba(0, 75, 141, 1)",
       tension: 0.4,
     },
   ],
@@ -143,7 +143,7 @@ const ordersChartData = {
     {
       label: "Orders",
       data: ordersData.map((item) => item.orders),
-      backgroundColor: "rgba(139, 92, 246, 0.8)",
+      backgroundColor: "rgba(247, 178, 79, 0.8)",
       borderRadius: 4,
     },
   ],
@@ -155,7 +155,7 @@ const engagementChartData = {
     {
       label: "Engagement",
       data: engagementData.map((item) => item.value),
-      backgroundColor: ["rgba(59, 130, 246, 0.8)", "rgba(16, 185, 129, 0.8)", "rgba(245, 158, 11, 0.8)"],
+      backgroundColor: ["rgba(0, 75, 141, 0.8)", "rgba(247, 178, 79, 0.8)", "rgba(0, 75, 141, 0.4)"],
       borderWidth: 1,
     },
   ],
@@ -167,15 +167,15 @@ const channelPerformanceData = {
     {
       label: "WhatsApp",
       data: [65, 59, 80, 81, 56, 55, 40],
-      borderColor: "rgba(37, 211, 102, 1)",
-      backgroundColor: "rgba(37, 211, 102, 0.5)",
+      borderColor: "rgba(0, 75, 141, 1)",
+      backgroundColor: "rgba(0, 75, 141, 0.5)",
       tension: 0.4,
     },
     {
       label: "Email",
       data: [42, 38, 55, 56, 40, 45, 30],
-      borderColor: "rgba(74, 144, 226, 1)",
-      backgroundColor: "rgba(74, 144, 226, 0.5)",
+      borderColor: "rgba(247, 178, 79, 1)",
+      backgroundColor: "rgba(247, 178, 79, 0.5)",
       tension: 0.4,
     },
   ],
@@ -226,7 +226,7 @@ export default function InsightsModule() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold">Insights Module</h2>
+        <h2 className="text-xl font-semibold" style={{ color: "#004B8D" }}>Insights Module</h2>
         <div className="flex items-center space-x-4">
           <Select defaultValue="30days">
             <SelectTrigger className="w-[180px]">
@@ -243,25 +243,25 @@ export default function InsightsModule() {
       </div>
 
       <Tabs defaultValue="performance" className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="performance">Performance Metrics</TabsTrigger>
-          <TabsTrigger value="engagement">Engagement Metrics</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2" style={{ backgroundColor: "#f0f5fa" }}>
+          <TabsTrigger value="performance" className="data-[state=active]:bg-white data-[state=active]:text-[#004B8D] data-[state=active]:shadow-sm">Performance Metrics</TabsTrigger>
+          <TabsTrigger value="engagement" className="data-[state=active]:bg-white data-[state=active]:text-[#004B8D] data-[state=active]:shadow-sm">Engagement Metrics</TabsTrigger>
         </TabsList>
 
         <TabsContent value="performance" className="pt-6">
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <Card>
+              <Card style={{ borderTop: "3px solid #F7B24F" }}>
                 <CardHeader className="pb-2">
                   <CardDescription>Revenue Generated</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                      <DollarSign className="h-5 w-5 mr-2 text-green-500" />
+                      <DollarSign className="h-5 w-5 mr-2" style={{ color: "#004B8D" }} />
                       <div className="text-2xl font-bold">₹234,004</div>
                     </div>
-                    <div className="flex items-center text-green-500 text-sm">
+                    <div className="flex items-center text-sm" style={{ color: "#F7B24F" }}>
                       <ArrowUpRight className="h-4 w-4 mr-1" />
                       <span>12.4%</span>
                     </div>
@@ -269,17 +269,17 @@ export default function InsightsModule() {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card style={{ borderTop: "3px solid #F7B24F" }}>
                 <CardHeader className="pb-2">
                   <CardDescription>Conversion Rate</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                      <TrendingUp className="h-5 w-5 mr-2 text-blue-500" />
+                      <TrendingUp className="h-5 w-5 mr-2" style={{ color: "#004B8D" }} />
                       <div className="text-2xl font-bold">12.4%</div>
                     </div>
-                    <div className="flex items-center text-green-500 text-sm">
+                    <div className="flex items-center text-sm" style={{ color: "#F7B24F" }}>
                       <ArrowUpRight className="h-4 w-4 mr-1" />
                       <span>2.1%</span>
                     </div>
@@ -287,17 +287,17 @@ export default function InsightsModule() {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card style={{ borderTop: "3px solid #F7B24F" }}>
                 <CardHeader className="pb-2">
                   <CardDescription>Number of Orders</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                      <ShoppingCart className="h-5 w-5 mr-2 text-purple-500" />
+                      <ShoppingCart className="h-5 w-5 mr-2" style={{ color: "#004B8D" }} />
                       <div className="text-2xl font-bold">432</div>
                     </div>
-                    <div className="flex items-center text-green-500 text-sm">
+                    <div className="flex items-center text-sm" style={{ color: "#F7B24F" }}>
                       <ArrowUpRight className="h-4 w-4 mr-1" />
                       <span>8.7%</span>
                     </div>
@@ -305,17 +305,17 @@ export default function InsightsModule() {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card style={{ borderTop: "3px solid #F7B24F" }}>
                 <CardHeader className="pb-2">
                   <CardDescription>Number of Buyers</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                      <Users className="h-5 w-5 mr-2 text-orange-500" />
+                      <Users className="h-5 w-5 mr-2" style={{ color: "#F7B24F" }} />
                       <div className="text-2xl font-bold">390</div>
                     </div>
-                    <div className="flex items-center text-green-500 text-sm">
+                    <div className="flex items-center text-sm" style={{ color: "#F7B24F" }}>
                       <ArrowUpRight className="h-4 w-4 mr-1" />
                       <span>6.5%</span>
                     </div>
@@ -325,10 +325,10 @@ export default function InsightsModule() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card>
+              <Card style={{ borderTop: "3px solid #F7B24F" }}>
                 <CardHeader>
                   <CardTitle className="flex items-center">
-                    <Package className="h-5 w-5 mr-2 text-blue-500" />
+                    <Package className="h-5 w-5 mr-2" style={{ color: "#004B8D" }} />
                     Top Cross-Sold Products
                   </CardTitle>
                   <CardDescription>Products with highest cross-sell performance</CardDescription>
@@ -357,10 +357,10 @@ export default function InsightsModule() {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card style={{ borderTop: "3px solid #F7B24F" }}>
                 <CardHeader>
                   <CardTitle className="flex items-center">
-                    <BarChart3 className="h-5 w-5 mr-2 text-purple-500" />
+                    <BarChart3 className="h-5 w-5 mr-2" style={{ color: "#F7B24F" }} />
                     Top Performance Cross-Sell Bundles
                   </CardTitle>
                   <CardDescription>Most effective product combinations</CardDescription>
@@ -399,7 +399,7 @@ export default function InsightsModule() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card>
+              <Card style={{ borderTop: "3px solid #F7B24F" }}>
                 <CardHeader>
                   <CardTitle>Revenue Trend</CardTitle>
                   <CardDescription>Daily revenue from cross-sell journeys</CardDescription>
@@ -411,7 +411,7 @@ export default function InsightsModule() {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card style={{ borderTop: "3px solid #F7B24F" }}>
                 <CardHeader>
                   <CardTitle>Orders Trend</CardTitle>
                   <CardDescription>Daily orders from cross-sell journeys</CardDescription>
@@ -429,14 +429,14 @@ export default function InsightsModule() {
         <TabsContent value="engagement" className="pt-6">
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Card>
+              <Card style={{ borderTop: "3px solid #F7B24F" }}>
                 <CardHeader className="pb-2">
                   <CardDescription>Delivery Rate</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center justify-between">
                     <div className="text-2xl font-bold">89%</div>
-                    <div className="flex items-center text-green-500 text-sm">
+                    <div className="flex items-center text-sm" style={{ color: "#F7B24F" }}>
                       <ArrowUpRight className="h-4 w-4 mr-1" />
                       <span>1.2%</span>
                     </div>
@@ -444,14 +444,14 @@ export default function InsightsModule() {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card style={{ borderTop: "3px solid #F7B24F" }}>
                 <CardHeader className="pb-2">
                   <CardDescription>Read Rate</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center justify-between">
                     <div className="text-2xl font-bold">43%</div>
-                    <div className="flex items-center text-green-500 text-sm">
+                    <div className="flex items-center text-sm" style={{ color: "#F7B24F" }}>
                       <ArrowUpRight className="h-4 w-4 mr-1" />
                       <span>3.5%</span>
                     </div>
@@ -459,14 +459,14 @@ export default function InsightsModule() {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card style={{ borderTop: "3px solid #F7B24F" }}>
                 <CardHeader className="pb-2">
                   <CardDescription>Click Rate</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center justify-between">
                     <div className="text-2xl font-bold">12%</div>
-                    <div className="flex items-center text-green-500 text-sm">
+                    <div className="flex items-center text-sm" style={{ color: "#F7B24F" }}>
                       <ArrowUpRight className="h-4 w-4 mr-1" />
                       <span>2.8%</span>
                     </div>
@@ -476,10 +476,10 @@ export default function InsightsModule() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card>
+              <Card style={{ borderTop: "3px solid #F7B24F" }}>
                 <CardHeader>
                   <CardTitle className="flex items-center">
-                    <PieChart className="h-5 w-5 mr-2 text-blue-500" />
+                    <PieChart className="h-5 w-5 mr-2" style={{ color: "#004B8D" }} />
                     Engagement Funnel
                   </CardTitle>
                   <CardDescription>Visualization of message engagement metrics</CardDescription>
@@ -491,7 +491,7 @@ export default function InsightsModule() {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card style={{ borderTop: "3px solid #F7B24F" }}>
                 <CardHeader>
                   <CardTitle>Channel Performance</CardTitle>
                   <CardDescription>Comparison of WhatsApp vs Email performance</CardDescription>

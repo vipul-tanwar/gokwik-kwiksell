@@ -72,22 +72,22 @@ export default function RecommendationModule() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold">Recommendation Module</h2>
+        <h2 className="text-xl font-semibold" style={{ color: "#004B8D" }}>Recommendation Module</h2>
         <div className="text-sm text-gray-500">Configure what cross-sell journeys should be enabled</div>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="ai-recommended">AI Recommended Bundles</TabsTrigger>
-          <TabsTrigger value="manual-bundles">Manual Bundles</TabsTrigger>
-          <TabsTrigger value="ai-autopilot">AI Auto-pilot<Badge className="ml-2 bg-green-500">Beta</Badge>
+        <TabsList className="grid w-full grid-cols-3" style={{ backgroundColor: "#f0f5fa" }}>
+          <TabsTrigger value="ai-recommended" className="data-[state=active]:bg-white data-[state=active]:text-[#004B8D] data-[state=active]:shadow-sm">AI Recommended Bundles</TabsTrigger>
+          <TabsTrigger value="manual-bundles" className="data-[state=active]:bg-white data-[state=active]:text-[#004B8D] data-[state=active]:shadow-sm">Manual Bundles</TabsTrigger>
+          <TabsTrigger value="ai-autopilot" className="data-[state=active]:bg-white data-[state=active]:text-[#004B8D] data-[state=active]:shadow-sm">AI Auto-pilot<Badge className="ml-2" style={{ backgroundColor: "#F7B24F" }}>Beta</Badge>
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="ai-recommended" className="pt-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="md:col-span-1">
-              <Card className="h-full">
+              <Card className="h-full" style={{ borderTop: "3px solid #F7B24F" }}>
                 <CardHeader>
                   <CardTitle className="text-lg">Top AI Recommended Bundles</CardTitle>
                   <CardDescription>Select a bundle to view details and enable/disable</CardDescription>
@@ -100,7 +100,7 @@ export default function RecommendationModule() {
                           key={bundle.id}
                           className={`p-3 rounded-md cursor-pointer border transition-colors ${
                             selectedBundle === bundle.id
-                              ? "border-blue-500 bg-blue-50"
+                              ? "border-[#004B8D] bg-blue-50"
                               : "border-gray-200 hover:border-gray-300"
                           }`}
                           onClick={() => setSelectedBundle(bundle.id)}
@@ -109,7 +109,7 @@ export default function RecommendationModule() {
                             <div className="font-medium truncate max-w-[180px]" title={bundle.productName}>
                               {bundle.productName}
                             </div>
-                            <Badge variant={bundle.enabled ? "default" : "outline"}>
+                            <Badge variant={bundle.enabled ? "default" : "outline"} style={bundle.enabled ? { backgroundColor: "#004B8D" } : {}}>
                               {bundle.enabled ? "Active" : "Inactive"}
                             </Badge>
                           </div>
@@ -118,7 +118,7 @@ export default function RecommendationModule() {
                           </div>
                           <div className="flex items-center justify-between mt-2 text-sm">
                             <div>After {bundle.crossSellDays} days</div>
-                            <div className="text-green-600">{bundle.conversionRate} conv.</div>
+                            <div style={{ color: "#F7B24F" }}>{bundle.conversionRate} conv.</div>
                           </div>
                         </div>
                       ))}
@@ -130,7 +130,7 @@ export default function RecommendationModule() {
 
             <div className="md:col-span-2">
               {selectedBundle !== null ? (
-                <Card>
+                <Card style={{ borderTop: "3px solid #F7B24F" }}>
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <CardTitle>Bundle Details</CardTitle>
@@ -191,7 +191,7 @@ export default function RecommendationModule() {
 
                             <div>
                               <h3 className="text-sm font-medium text-gray-500 mb-1">Expected Performance</h3>
-                              <div className="font-medium text-green-600">
+                              <div className="font-medium" style={{ color: "#F7B24F" }}>
                                 {bundles.find((b) => b.id === selectedBundle)?.conversionRate} conversion rate
                               </div>
                             </div>
@@ -225,13 +225,13 @@ export default function RecommendationModule() {
         </TabsContent>
 
         <TabsContent value="ai-autopilot" className="pt-6">
-          <Card>
+          <Card style={{ borderTop: "3px solid #F7B24F" }}>
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle className="flex items-center">
                     AI Auto-pilot
-                    <Badge className="ml-2 bg-green-500">Beta</Badge>
+                    <Badge className="ml-2" style={{ backgroundColor: "#F7B24F" }}>Beta</Badge>
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -255,7 +255,7 @@ export default function RecommendationModule() {
               </div>
             </CardHeader>
             <CardContent className="space-y-6">
-              <Alert className="bg-blue-50 border-blue-200">
+              <Alert className="bg-blue-50" style={{ borderColor: "#004B8D" }}>
                 <AlertDescription className="text-blue-800">
                   When enabled, AI Auto-pilot will take over all cross-sell journeys and optimize them for maximum
                   conversion. Individual bundles will be automatically disabled.
@@ -267,19 +267,19 @@ export default function RecommendationModule() {
                   <h3 className="text-sm font-medium">How it works</h3>
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start">
-                      <ArrowRight className="h-4 w-4 mr-2 mt-0.5 text-blue-500" />
+                      <ArrowRight className="h-4 w-4 mr-2 mt-0.5" style={{ color: "#004B8D" }} />
                       <span>AI analyzes your store's data to identify optimal cross-sell opportunities</span>
                     </li>
                     <li className="flex items-start">
-                      <ArrowRight className="h-4 w-4 mr-2 mt-0.5 text-blue-500" />
+                      <ArrowRight className="h-4 w-4 mr-2 mt-0.5" style={{ color: "#004B8D" }} />
                       <span>Automatically creates and sends personalized cross-sell messages</span>
                     </li>
                     <li className="flex items-start">
-                      <ArrowRight className="h-4 w-4 mr-2 mt-0.5 text-blue-500" />
+                      <ArrowRight className="h-4 w-4 mr-2 mt-0.5" style={{ color: "#004B8D" }} />
                       <span>Continuously learns and improves based on performance</span>
                     </li>
                     <li className="flex items-start">
-                      <ArrowRight className="h-4 w-4 mr-2 mt-0.5 text-blue-500" />
+                      <ArrowRight className="h-4 w-4 mr-2 mt-0.5" style={{ color: "#004B8D" }} />
                       <span>Respects control parameters set in the Control module</span>
                     </li>
                   </ul>
@@ -289,19 +289,19 @@ export default function RecommendationModule() {
                   <h3 className="text-sm font-medium">Benefits</h3>
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start">
-                      <ArrowRight className="h-4 w-4 mr-2 mt-0.5 text-green-500" />
+                      <ArrowRight className="h-4 w-4 mr-2 mt-0.5" style={{ color: "#F7B24F" }} />
                       <span>Increased conversion rates through AI-optimized timing</span>
                     </li>
                     <li className="flex items-start">
-                      <ArrowRight className="h-4 w-4 mr-2 mt-0.5 text-green-500" />
+                      <ArrowRight className="h-4 w-4 mr-2 mt-0.5" style={{ color: "#F7B24F" }} />
                       <span>Personalized product recommendations for each customer</span>
                     </li>
                     <li className="flex items-start">
-                      <ArrowRight className="h-4 w-4 mr-2 mt-0.5 text-green-500" />
+                      <ArrowRight className="h-4 w-4 mr-2 mt-0.5" style={{ color: "#F7B24F" }} />
                       <span>Reduced manual effort in managing cross-sell campaigns</span>
                     </li>
                     <li className="flex items-start">
-                      <ArrowRight className="h-4 w-4 mr-2 mt-0.5 text-green-500" />
+                      <ArrowRight className="h-4 w-4 mr-2 mt-0.5" style={{ color: "#F7B24F" }} />
                       <span>Continuous optimization based on real-time performance data</span>
                     </li>
                   </ul>
@@ -312,7 +312,7 @@ export default function RecommendationModule() {
         </TabsContent>
 
         <TabsContent value="manual-bundles" className="pt-6">
-          <Card>
+          <Card style={{ borderTop: "3px solid #F7B24F" }}>
             <CardHeader>
               <CardTitle>Manual Cross-Sell Bundles</CardTitle>
               <CardDescription>Create custom cross-sell bundles by selecting products manually</CardDescription>
@@ -390,7 +390,7 @@ export default function RecommendationModule() {
                     </div>
 
                     <div className="pt-4">
-                      <Button className="w-full">
+                      <Button className="w-full" style={{ backgroundColor: "#004B8D" }}>
                         <Plus className="h-4 w-4 mr-2" />
                         Add Bundle
                       </Button>

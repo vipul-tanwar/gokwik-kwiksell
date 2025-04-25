@@ -12,19 +12,19 @@ export default function ControlModule() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold">Control Module</h2>
+        <h2 className="text-xl font-semibold" style={{ color: "#004B8D" }}>Control Module</h2>
         <div className="text-sm text-gray-500">Define when and how cross-sell journeys should be controlled</div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card>
+        <Card style={{ borderTop: "3px solid #F7B24F" }}>
           <CardHeader>
             <CardTitle className="flex items-center">
               Frequency Capping
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Info className="h-4 w-4 ml-2 text-gray-400" />
+                    <Info className="h-4 w-4 ml-2" style={{ color: "#004B8D" }} />
                   </TooltipTrigger>
                   <TooltipContent>
                     <p className="w-[250px] text-sm">
@@ -77,14 +77,14 @@ export default function ControlModule() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card style={{ borderTop: "3px solid #F7B24F" }}>
           <CardHeader>
             <CardTitle className="flex items-center">
               Cart Value Threshold
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Info className="h-4 w-4 ml-2 text-gray-400" />
+                    <Info className="h-4 w-4 ml-2" style={{ color: "#004B8D" }} />
                   </TooltipTrigger>
                   <TooltipContent>
                     <p className="w-[250px] text-sm">
@@ -130,14 +130,14 @@ export default function ControlModule() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card style={{ borderTop: "3px solid #F7B24F" }}>
           <CardHeader>
             <CardTitle className="flex items-center">
               Priority Settings
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Info className="h-4 w-4 ml-2 text-gray-400" />
+                    <Info className="h-4 w-4 ml-2" style={{ color: "#004B8D" }} />
                   </TooltipTrigger>
                   <TooltipContent>
                     <p className="w-[250px] text-sm">
@@ -193,14 +193,14 @@ export default function ControlModule() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card style={{ borderTop: "3px solid #F7B24F" }}>
           <CardHeader>
             <CardTitle className="flex items-center">
               Trigger Settings
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Info className="h-4 w-4 ml-2 text-gray-400" />
+                    <Info className="h-4 w-4 ml-2" style={{ color: "#004B8D" }} />
                   </TooltipTrigger>
                   <TooltipContent>
                     <p className="w-[250px] text-sm">
@@ -254,7 +254,7 @@ export default function ControlModule() {
       </div>
 
       <div className="flex justify-end">
-        <Button className="px-6">
+        <Button className="px-6" style={{ backgroundColor: "#004B8D" }}>
           <Save className="h-4 w-4 mr-2" />
           Save Control Settings
         </Button>

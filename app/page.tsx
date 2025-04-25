@@ -7,20 +7,20 @@ import { KwikEngageHeader } from "@/components/kwik-engage-header"
 
 export default function SmartCrossSellPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50">
       <KwikEngageHeader />
       <main className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold">Smart Cross-Sell</h1>
+          <h1 className="text-2xl font-bold" style={{ color: "#004B8D" }}>Smart Cross-Sell</h1>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm border p-6">
+        <div className="bg-white rounded-lg shadow-sm border p-6" style={{ borderTop: "3px solid #F7B24F" }}>
           <Tabs defaultValue="recommendation" className="w-full">
-            <TabsList className="grid grid-cols-4 mb-6">
-              <TabsTrigger value="recommendation">Recommendation</TabsTrigger>
-              <TabsTrigger value="control">Control</TabsTrigger>
-              <TabsTrigger value="action">Action</TabsTrigger>
-              <TabsTrigger value="insights">Insights</TabsTrigger>
+            <TabsList className="grid grid-cols-4 mb-6" style={{ backgroundColor: "#f0f5fa" }}>
+              <TabsTrigger value="recommendation" className="data-[state=active]:bg-white data-[state=active]:text-[#004B8D] data-[state=active]:shadow-sm">Recommendation</TabsTrigger>
+              <TabsTrigger value="control" className="data-[state=active]:bg-white data-[state=active]:text-[#004B8D] data-[state=active]:shadow-sm">Control</TabsTrigger>
+              <TabsTrigger value="action" className="data-[state=active]:bg-white data-[state=active]:text-[#004B8D] data-[state=active]:shadow-sm">Action</TabsTrigger>
+              <TabsTrigger value="insights" className="data-[state=active]:bg-white data-[state=active]:text-[#004B8D] data-[state=active]:shadow-sm">Insights</TabsTrigger>
             </TabsList>
             <TabsContent value="recommendation">
               <RecommendationModule />
