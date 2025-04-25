@@ -79,8 +79,9 @@ export default function RecommendationModule() {
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="ai-recommended">AI Recommended Bundles</TabsTrigger>
-          <TabsTrigger value="ai-autopilot">AI Auto-pilot</TabsTrigger>
           <TabsTrigger value="manual-bundles">Manual Bundles</TabsTrigger>
+          <TabsTrigger value="ai-autopilot">AI Auto-pilot<Badge className="ml-2 bg-yellow-500">Beta</Badge>
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="ai-recommended" className="pt-6">
@@ -230,7 +231,7 @@ export default function RecommendationModule() {
                 <div>
                   <CardTitle className="flex items-center">
                     AI Auto-pilot
-                    <Badge className="ml-2 bg-yellow-500">Beta</Badge>
+                    <Badge className="ml-2 bg-green-500">Beta</Badge>
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
