@@ -190,9 +190,9 @@ export default function ActionModule() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold" style={{ color: "#004B8D" }}>Action Module</h2>
+        <h2 className="text-xl font-semibold" style={{ color: "#004B8D" }}></h2>
         <div className="text-sm text-gray-500">Configure what content should be sent to customers</div>
       </div>
 

@@ -224,9 +224,9 @@ const pieChartOptions = {
 
 export default function InsightsModule() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold" style={{ color: "#004B8D" }}>Insights Module</h2>
+        <h2 className="text-xl font-semibold" style={{ color: "#004B8D" }}></h2>
         <div className="flex items-center space-x-4">
           <Select defaultValue="30days">
             <SelectTrigger className="w-[180px]">

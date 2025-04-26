@@ -16,7 +16,7 @@ export default function SmartCrossSellPage() {
 
         <div className="bg-white rounded-lg shadow-sm border p-6" style={{ borderTop: "3px solid #F7B24F" }}>
           <Tabs defaultValue="recommendation" className="w-full">
-            <TabsList className="grid grid-cols-4 mb-6" style={{ backgroundColor: "#f0f5fa" }}>
+            <TabsList className="grid grid-cols-4 mb-4" style={{ backgroundColor: "#f0f5fa" }}>
               <TabsTrigger value="recommendation" className="data-[state=active]:bg-white data-[state=active]:text-[#004B8D] data-[state=active]:shadow-sm">Recommendation</TabsTrigger>
               <TabsTrigger value="control" className="data-[state=active]:bg-white data-[state=active]:text-[#004B8D] data-[state=active]:shadow-sm">Control</TabsTrigger>
               <TabsTrigger value="action" className="data-[state=active]:bg-white data-[state=active]:text-[#004B8D] data-[state=active]:shadow-sm">Action</TabsTrigger>

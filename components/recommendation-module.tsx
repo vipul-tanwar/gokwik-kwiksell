@@ -95,9 +95,9 @@ export default function RecommendationModule() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold" style={{ color: "#004B8D" }}>Recommendation Module</h2>
+        <h2 className="text-xl font-semibold" style={{ color: "#004B8D" }}></h2>
         <div className="text-sm text-gray-500">Configure what cross-sell journeys should be enabled</div>
       </div>
 
