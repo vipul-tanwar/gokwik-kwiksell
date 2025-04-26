@@ -17,6 +17,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {children}
+        <footer className="py-4 text-center text-sm text-gray-500 mt-8 border-t">
+          Crafted with passion by The Kwik Mavericks
+        </footer>
         <Toaster />
       </body>
     </html>
