@@ -81,4 +81,4 @@ Experience Kwik Sell in action: [Live Demo](https://v0-kwik-engage-smart-cross-s
 
 ---
 
-Developed by [GoKwik](https://gokwik.co) | Empowering e-commerce businesses with intelligent solutions
+Developed by **The Kwik Mavericks** for [GoKwik](https://gokwik.co) — Empowering e-commerce businesses with intelligent solutions.
