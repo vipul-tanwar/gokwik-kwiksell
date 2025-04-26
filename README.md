@@ -73,7 +73,7 @@ Kwik Sell is built using Next.js and React, with a modern UI powered by Tailwind
 - Responsive design for desktop and mobile devices
 - Real-time analytics and data visualization
 - Secure API integration with WhatsApp Business API
-- AI-powered recommendation and content generation
+- AI-powered recommendation and content generation (Beta)
 
 ## Live Demo
 
